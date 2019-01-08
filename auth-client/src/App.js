@@ -1,67 +1,33 @@
 import React, { Component } from 'react';
-import { getProducts } from './dataReadingServices/productsReadingService';
 import './App.css';
 
+import Content from './Components/Content';
+import LogOnForm from './Components/LogOnForm';
+
 class App extends Component {
+
   state = {
-    products: [],
-    isError: false,
-    isLoading: false,
+    isAuthDone: false
   }
 
-  loadData = () => {
+  constructor(props) {
+    localStorage.setItem('authToken', '');
+    super(props);
+  }
+
+  hasToken = () => {
+    const token = localStorage.getItem('authToken');
+    console.log(JSON.stringify(token));
+    return !!token;
+  }
+
+  updateAuthState = (isSuccess) => {
     this.setState({
-      isLoading: true,
-      isError: false,
+      isAuthDone: isSuccess
     });
-
-    getProducts()
-      .then(res => {
-        this.setState({
-          products: res.data,
-          isLoading: false,
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({
-          isError: true,
-          isLoading: false,
-        });
-      });
-  }
-
-  componentDidMount() {
-    this.loadData();
-  }
-
-  buildBody = () => {
-    const { isError, isLoading, products } = this.state;
-
-    if (isError) {
-      return (
-        <>
-          <p style={{ color: 'red' }}>ERROR</p>
-          <button onClick={this.loadData}>Repeat</button>
-        </>
-      );
-    }
-
-    if (isLoading) {
-      return <p style={{ color: 'blue' }}>LOADING...</p>
-    }
-
-    return (
-      <>
-        <div>products count: {products.length}</div>
-        {products.map((p, index) => (<p>{index + 1}. {p}</p>))}
-      </>
-    );
   }
 
   render() {
-
-
     return (
       <div className="App">
         <header className="App-header">
@@ -70,7 +36,9 @@ class App extends Component {
           </p>
         </header>
         <div>
-          {this.buildBody()}
+          {
+            this.hasToken() && this.state.isAuthDone ? <Content /> : <LogOnForm updateAuthState={this.updateAuthState} />
+          }
         </div>
       </div>
     );

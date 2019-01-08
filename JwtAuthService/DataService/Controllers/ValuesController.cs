@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataService.ExternalServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataService.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class ValuesController : ControllerBase
   {
     private readonly IAnotherDataService _anotherDataService;

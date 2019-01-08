@@ -5,3 +5,5 @@
 /JwtAuthService/AuthService/obj/
 /JwtAuthService/DataService/bin/
 /JwtAuthService/DataService/obj/
+/JwtAuthService/CommonAuthSettings/obj/
+/JwtAuthService/CommonStartup/obj/

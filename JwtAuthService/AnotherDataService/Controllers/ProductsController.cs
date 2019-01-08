@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AnotherDataService.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace AnotherDataService.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class ProductsController : ControllerBase
   {
     [HttpGet]
