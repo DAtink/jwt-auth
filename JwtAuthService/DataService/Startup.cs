@@ -27,6 +27,7 @@ namespace DataService
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      services.AddCors();
 
       services.AddSingleton<IAnotherDataService, AnotherDataService>();
     }
@@ -45,6 +46,11 @@ namespace DataService
       }
 
       //app.UseHttpsRedirection();
+      app.UseCors(x => {
+        x.AllowAnyHeader();
+        x.AllowAnyMethod();
+        x.AllowAnyOrigin();
+      });
       app.UseMvc();
     }
   }
